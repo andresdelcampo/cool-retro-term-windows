@@ -46,6 +46,16 @@ imports
 cool-retro-term
 build
 
+# Local CMake and Ninja output
+/out/
+/CMakeCache.txt
+/CMakeFiles/
+/cmake_install.cmake
+/build.ninja
+/.ninja_deps
+/.ninja_log
+cool-retro-term-debug.log
+
 # Linux
 
 *.AppImage

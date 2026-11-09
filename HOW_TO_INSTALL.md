@@ -20,93 +20,36 @@ That's it. All Qt6 DLLs and plugins are included in the zip.
 
 ## Option 2: Build from Source
 
-### Prerequisites
+Install Git, CMake, Ninja, and a Qt 6.8+ x64 kit with Qt Shader Tools. Use the compiler that matches your Qt kit. For MSVC, open the x64 Native Tools Command Prompt. For MinGW, put the matching MinGW `bin` directory on PATH.
 
-1. **Visual Studio 2022** (Community or Build Tools)
-   - Download: https://visualstudio.microsoft.com/
-   - During installation, select the **"Desktop development with C++"** workload
-
-2. **Qt 6.8+** for MSVC 2022 64-bit
-   - Download: https://www.qt.io/download
-   - Install the **MSVC 2022 64-bit** kit
-   - Also install the **Qt5Compat** and **Qt ShaderTools** modules
-
-3. **Git** (to clone the repository)
-   - Download: https://git-scm.com/download/win
-
-### Clone the Repository
+Clone the fork with its submodule if you need a checkout:
 
 ```batch
-git clone https://github.com/pushingpandas/cool-retro-term-windows.git
+git clone --recurse-submodules https://github.com/andresdelcampo/cool-retro-term-windows.git
 cd cool-retro-term-windows
 ```
 
-### Build
-
-Open a **x64 Native Tools Command Prompt for VS 2022**, then run:
+From the repository root, add the Qt kit's `bin` directory to PATH and pass the kit directory to the build script. This example uses Qt 6.8.3 and MinGW 13.1:
 
 ```batch
-rem Set up the MSVC compiler environment (skip if using VS command prompt)
-call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
-
-rem Add Qt to PATH (adjust path to match your Qt installation)
-set PATH=D:\Qt\6.8.3\msvc2022_64\bin;%PATH%
-
-rem Generate makefiles and build
-qmake cool-retro-term.pro -spec win32-msvc
-nmake
+set "PATH=C:\Qt\6.8.3\mingw_64\bin;C:\Qt\Tools\mingw1310_64\bin;%PATH%"
+build_win.bat "C:\Qt\6.8.3\mingw_64"
 ```
 
-The executable will be at: `cool-retro-term.exe` (project root) or `app\release\cool-retro-term.exe`
-
-### Deploy
-
-To create a standalone distributable folder:
-
-```batch
-mkdir deploy
-copy cool-retro-term.exe deploy\
-cd deploy
-
-rem Deploy Qt runtime DLLs
-windeployqt cool-retro-term.exe --qmldir ..\app\qml
-
-rem Copy the QMLTermWidget plugin
-mkdir qml\QMLTermWidget
-copy ..\qmltermwidget\release\qmltermwidget.dll qml\QMLTermWidget\
-copy ..\qmltermwidget\src\qmldir qml\QMLTermWidget\
-copy ..\qmltermwidget\src\QMLTermScrollbar.qml qml\QMLTermWidget\
-
-rem Copy color schemes and keyboard layouts
-xcopy /E ..\qmltermwidget\lib\color-schemes qml\QMLTermWidget\color-schemes\
-xcopy /E ..\qmltermwidget\lib\kb-layouts qml\QMLTermWidget\kb-layouts\
-
-rem Copy extra Qt modules (from your Qt installation bin/ directory)
-copy D:\Qt\6.8.3\msvc2022_64\bin\Qt6Core5Compat.dll .
-copy D:\Qt\6.8.3\msvc2022_64\bin\Qt6ShaderTools.dll .
-```
-
-### Compile Shaders (Optional)
-
-Only needed if you modify the CRT effect shaders:
-
-```batch
-rem Edit compile_shaders.bat to set your Qt qsb.exe path, then:
-compile_shaders.bat
-```
+The script builds with CMake and Ninja, compiles the shader variants, and deploys the runtime and terminal plugin into `build\app`. Run `build\app\cool-retro-term.exe` and choose a Classic preset in **Profiles**. Keep the files in that directory together.
 
 ---
 
 ## Troubleshooting
 
 ### "Qt6Core.dll not found" or similar DLL errors
-All Qt6 DLLs must be in the same folder as `cool-retro-term.exe`. If you built from source, run `windeployqt` as described above.
+All Qt6 DLLs must be in the same folder as `cool-retro-term.exe`. If you built from source, run `build_win.bat` to build and deploy the runtime.
 
 ### Black screen / no CRT effects
 The app requires OpenGL. Make sure your GPU drivers are up to date. The app forces OpenGL rendering to avoid D3D11 shader compatibility issues.
 
 ### Terminal doesn't accept input
-Make sure you're running the freshly built exe, not a stale copy. Rebuild with `nmake` and copy the new exe to your deploy folder.
+Rebuild with `build_win.bat` and launch `build\app\cool-retro-term.exe`.
 
 ### PowerShell doesn't start
 cool-retro-term looks for shells in this order: `pwsh` (PowerShell Core) → `powershell` (Windows PowerShell) → `cmd.exe`. Make sure at least one is available on your system PATH.

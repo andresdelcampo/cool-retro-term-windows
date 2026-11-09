@@ -22,7 +22,7 @@ Settings such as colors, fonts, and effects can be accessed via the **menu bar**
 
 The exe and all required Qt6 DLLs are in the same folder — no installation needed.
 
-> **Building from source?** After running `nmake`, the exe is at `app\release\cool-retro-term.exe`. See [Building on Windows](#building-on-windows) for full instructions.
+> **Building from source?** The Windows build script produces a runnable copy in `build/app`. See [Building on Windows](#building-on-windows).
 
 ## Screenshots
 ![Image](<https://i.imgur.com/TNumkDn.png>)
@@ -43,62 +43,18 @@ The exe and all required Qt6 DLLs are in the same folder — no installation nee
 
 ### Requirements
 - Windows 10 version 1809+ (for ConPTY API) or Windows 11
-- Qt 6.8+ (MSVC 2022 build)
-- Visual Studio 2022 (Build Tools or Community)
+- Qt 6.8+ with Shader Tools and a matching x64 C++ toolchain
+- CMake and Ninja for source builds
 
 ## Building on Windows
 
-### Prerequisites
-1. Install [Visual Studio 2022](https://visualstudio.microsoft.com/) (Community edition or Build Tools) with "Desktop development with C++" workload
-2. Install [Qt 6.8+](https://www.qt.io/download) for MSVC 2022 64-bit
-3. Make sure `qmake` is in your PATH (e.g., `D:\Qt\6.8.3\msvc2022_64\bin`)
+Follow the [Windows build instructions](HOW_TO_INSTALL.md#option-2-build-from-source) to build and deploy into the ignored `build/app` directory. Select **Profiles → Classic Amber (1.1.1)** to try the classic renderer.
 
-### Build
-```batch
-rem Open a "x64 Native Tools Command Prompt for VS 2022" or run:
-call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
-set PATH=D:\Qt\6.8.3\msvc2022_64\bin;%PATH%
+### Classic 1.1.1 rendering
 
-cd cool-retro-term
-qmake cool-retro-term.pro -spec win32-msvc
-nmake
-```
+The nine Classic profiles select the 1.1.1 rendering path. It applies scanline and pixel masks before bloom and uses the original curvature, bezel and glow effects. Futuristic retains its translucent window. The source build bakes the Qt shaders, and the corresponding `.qsb` assets are tracked.
 
-Or use the provided `build_win.bat` (edit paths to match your Qt installation first).
-
-### Compile Shaders
-```batch
-rem Edit compile_shaders.bat to set your Qt qsb.exe path, then:
-compile_shaders.bat
-```
-
-### Deploy
-```batch
-mkdir deploy
-copy app\release\cool-retro-term.exe deploy\
-cd deploy
-windeployqt cool-retro-term.exe
-
-rem Copy QMLTermWidget plugin
-mkdir qt6\qml\QMLTermWidget
-copy ..\qmltermwidget\release\qmltermwidget.dll qt6\qml\QMLTermWidget\
-copy ..\qmltermwidget\src\qmldir qt6\qml\QMLTermWidget\
-copy ..\qmltermwidget\src\QMLTermScrollbar.qml qt6\qml\QMLTermWidget\
-
-rem Move Qt6 DLLs to qt6/ subfolder for a clean layout
-mkdir qt6
-move Qt6*.dll qt6\
-move D3Dcompiler_47.dll qt6\
-move opengl32sw.dll qt6\
-rem Also move: generic, iconengines, imageformats, networkinformation,
-rem platforms, qml, qmltooling, sqldrivers, styles, tls, translations into qt6/
-
-rem Install Qt5Compat.GraphicalEffects (download from Qt if not present)
-rem Install Qt6ShaderTools.dll into qt6/
-```
-
-### Run
-Launch via `cool-retro-term.bat` (sets DLL paths) or run `cool-retro-term.exe` directly if Qt6 DLLs are in PATH.
+The presets were compared with the original 1.1.1 app in WSL at 1024×768 and 1× scaling. Measured row pitch matched for all nine. IBM 3278 and Futuristic render slightly heavier glyphs on Windows.
 
 ## Original Project
 
