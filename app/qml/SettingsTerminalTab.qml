@@ -117,24 +117,6 @@ ColumnLayout {
                 Component.onCompleted: updateIndex()
             }
             Label {
-                text: qsTr("Scaling")
-            }
-            RowLayout {
-                Layout.fillWidth: true
-                Slider {
-                    Layout.fillWidth: true
-                    id: fontScalingChanger
-                    onValueChanged: appSettings.fontScaling = value
-                    value: appSettings.fontScaling
-                    stepSize: 0.05
-                    from: appSettings.minimumFontScaling
-                    to: appSettings.maximumFontScaling
-                }
-                SizedLabel {
-                    text: Math.round(fontScalingChanger.value * 100) + "%"
-                }
-            }
-            Label {
                 text: qsTr("Font Width")
             }
             RowLayout {
@@ -169,6 +151,12 @@ ColumnLayout {
                 SizedLabel {
                     text: Math.round(lineSpacingChanger.value * 100) + "%"
                 }
+            }
+            CheckBox {
+                Layout.columnSpan: 2
+                text: qsTr("Blinking Cursor")
+                checked: appSettings.blinkingCursor
+                onCheckedChanged: appSettings.blinkingCursor = checked
             }
         }
     }

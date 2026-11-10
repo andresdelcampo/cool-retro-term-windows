@@ -47,6 +47,7 @@ cool-retro-term
 build
 
 # Local CMake and Ninja output
+/build-icon/
 /out/
 /CMakeCache.txt
 /CMakeFiles/

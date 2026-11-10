@@ -28,6 +28,14 @@ MenuBar {
         title: qsTr("File")
         MenuItem { action: newWindowAction }
         MenuItem { action: newTabAction }
+        Menu {
+            title: qsTr("New Tab With Shell")
+            enabled: appSettings.isWindows
+            visible: appSettings.isWindows
+            MenuItem { text: qsTr("PowerShell"); onTriggered: terminalTabs.addTab("powershell") }
+            MenuItem { text: qsTr("Command Prompt"); onTriggered: terminalTabs.addTab("cmd") }
+            MenuItem { text: qsTr("WSL (default distribution)"); onTriggered: terminalTabs.addTab("wsl") }
+        }
         MenuItem { action: closeTabAction }
         MenuSeparator { }
         MenuItem { action: quitAction }
@@ -38,6 +46,7 @@ MenuBar {
         MenuItem { action: pasteAction }
         MenuSeparator {}
         MenuItem { action: showsettingsAction }
+        MenuItem { action: showProfilesAction }
     }
     Menu {
         id: viewMenu
@@ -49,13 +58,14 @@ MenuBar {
             onObjectRemoved: (index, object) => viewMenu.removeItem(object)
         }
         MenuItem { action: borderlessAction; visible: borderlessAction.enabled }
-        MenuItem { action: menubarAction; visible: menubarAction.enabled }
         MenuItem { action: zoomIn }
         MenuItem { action: zoomOut }
     }
     Menu {
         id: profilesMenu
         title: qsTr("Profiles")
+        MenuItem { action: showProfilesAction }
+        MenuSeparator { }
         Instantiator {
             model: appSettings.profilesList
             delegate: MenuItem {
@@ -64,7 +74,7 @@ MenuBar {
                     appSettings.loadProfileString(obj_string)
                 }
             }
-            onObjectAdded: function(index, object) { profilesMenu.insertItem(index, object) }
+            onObjectAdded: function(index, object) { profilesMenu.insertItem(index + 2, object) }
             onObjectRemoved: function(object) { profilesMenu.removeItem(object) }
         }
     }

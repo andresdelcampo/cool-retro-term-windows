@@ -33,6 +33,23 @@ ColumnLayout {
 
         ColumnLayout {
             anchors.fill: parent
+            RowLayout {
+                visible: appSettings.isWindows
+                Label { text: qsTr("Startup shell") }
+                ComboBox {
+                    Layout.fillWidth: true
+                    enabled: !appSettings.useCustomCommand
+                    model: [qsTr("PowerShell (automatic)"), qsTr("Command Prompt"), qsTr("WSL (default distribution)")]
+                    currentIndex: appSettings.windowsShell === "cmd" ? 1 : appSettings.windowsShell === "wsl" ? 2 : 0
+                    onActivated: appSettings.windowsShell = index === 1 ? "cmd" : index === 2 ? "wsl" : "default"
+                }
+            }
+            Label {
+                visible: appSettings.isWindows
+                text: qsTr("Shell changes apply to new sessions. WSL requires an installed distribution.")
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
             CheckBox {
                 id: useCustomCommand
                 text: qsTr("Use custom command instead of shell at startup")
@@ -53,18 +70,33 @@ ColumnLayout {
                 Component.onCompleted: settings_window.closing.connect(
                                            saveSetting)
             }
-            CheckBox {
-                id: blinkingCursor
-                text: qsTr("Blinking Cursor")
-                checked: appSettings.blinkingCursor
-                onCheckedChanged: appSettings.blinkingCursor = checked
+            RowLayout {
+                Layout.fillWidth: true
+                Label { text: qsTr("Font scaling") }
+                Slider {
+                    id: fontScalingChanger
+                    Layout.fillWidth: true
+                    onValueChanged: appSettings.fontScaling = value
+                    value: appSettings.fontScaling
+                    stepSize: 0.05
+                    from: appSettings.minimumFontScaling
+                    to: appSettings.maximumFontScaling
+                }
+                SizedLabel { text: Math.round(fontScalingChanger.value * 100) + "%" }
             }
             CheckBox {
                 id: showMenubar
-                text: qsTr("Show Menubar")
-                enabled: !appSettings.isMacOS
-                checked: appSettings.showMenubar
-                onCheckedChanged: appSettings.showMenubar = checked
+                text: appSettings.isWindows && appSettings.borderlessWindow
+                      ? qsTr("Show Menu Bar (hidden in borderless mode)")
+                      : qsTr("Show Menu Bar")
+                enabled: !appSettings.isMacOS && !(appSettings.isWindows && appSettings.borderlessWindow)
+                checked: appSettings.isWindows ? appSettings.showWindowsMenubar : appSettings.showMenubar
+                onClicked: {
+                    if (appSettings.isWindows)
+                        appSettings.showWindowsMenubar = checked
+                    else
+                        appSettings.showMenubar = checked
+                }
             }
         }
     }

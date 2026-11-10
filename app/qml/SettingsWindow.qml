@@ -26,9 +26,10 @@ import QtQuick.Dialogs
 
 ApplicationWindow {
     readonly property real tabButtonPadding: 10
+    property bool profileMode: false
 
     id: settings_window
-    title: qsTr("Settings")
+    title: profileMode ? qsTr("Profiles") : qsTr("Settings")
     width: 640
     height: 520
 
@@ -37,10 +38,11 @@ ApplicationWindow {
 
         TabBar {
             id: bar
+            visible: settings_window.profileMode
             anchors { left: parent.left; right: parent.right; top: parent.top; }
             TabButton {
                 padding: tabButtonPadding
-                text: qsTr("General")
+                text: qsTr("Profiles & Screen")
             }
             TabButton {
                 padding: tabButtonPadding
@@ -50,22 +52,19 @@ ApplicationWindow {
                 padding: tabButtonPadding
                 text: qsTr("Effects")
             }
-            TabButton {
-                padding: tabButtonPadding
-                text: qsTr("Advanced")
-            }
         }
 
         StackLayout {
             anchors {
-                top: bar.bottom
+                top: parent.top
+                topMargin: bar.visible ? bar.height + 16 : 16
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
                 margins: 16
             }
 
-            currentIndex: bar.currentIndex
+            currentIndex: settings_window.profileMode ? bar.currentIndex : 3
 
             SettingsGeneralTab { }
             SettingsTerminalTab { }

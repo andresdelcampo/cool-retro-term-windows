@@ -1,6 +1,6 @@
 Add-Type -AssemblyName System.Drawing
 $root = Split-Path $PSScriptRoot -Parent
-$source = [System.Drawing.Bitmap]::new((Join-Path $root 'app/qml/images/crt256.png'))
+$source = [System.Drawing.Bitmap]::new((Join-Path $root 'app/icons/crt-monitor.png'))
 $images = @()
 $sizes = @(16, 24, 32, 48, 64, 128, 256)
 foreach ($size in $sizes) {

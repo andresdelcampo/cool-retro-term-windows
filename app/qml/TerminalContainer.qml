@@ -26,6 +26,7 @@ ShaderTerminal {
     property alias title: terminal.title
     property alias terminalSize: terminal.terminalSize
     property bool isActive: false
+    property alias shellOverride: terminal.shellOverride
     signal sessionFinished()
 
     property bool loadBloomEffect: appSettings.bloom > 0

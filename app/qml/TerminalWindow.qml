@@ -69,14 +69,6 @@ ApplicationWindow {
         onTriggered: appSettings.borderlessWindow = !appSettings.borderlessWindow
     }
     Action {
-        id: menubarAction
-        text: qsTr("Show Menu Bar")
-        enabled: appSettings.isWindows && !appSettings.borderlessWindow
-        checkable: true
-        checked: appSettings.showWindowsMenubar
-        onTriggered: appSettings.showWindowsMenubar = !appSettings.showWindowsMenubar
-    }
-    Action {
         id: newWindowAction
         text: qsTr("New Window")
         shortcut: appSettings.isMacOS ? "Meta+N" : "Ctrl+Shift+N"
@@ -92,6 +84,17 @@ ApplicationWindow {
         id: showsettingsAction
         text: qsTr("Settings")
         onTriggered: {
+            settingsWindow.profileMode = false
+            settingsWindow.show()
+            settingsWindow.requestActivate()
+            settingsWindow.raise()
+        }
+    }
+    Action {
+        id: showProfilesAction
+        text: qsTr("Edit Profiles…")
+        onTriggered: {
+            settingsWindow.profileMode = true
             settingsWindow.show()
             settingsWindow.requestActivate()
             settingsWindow.raise()

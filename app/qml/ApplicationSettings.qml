@@ -63,6 +63,7 @@ QtObject {
     property real contrast: 0.80
     property real brightness: 0.5
 
+    property string windowsShell: "default"
     property bool useCustomCommand: false
     property string customCommand: ""
 
@@ -178,6 +179,7 @@ QtObject {
             "borderlessWindow": borderlessWindow,
             "bloomQuality": bloomQuality,
             "burnInQuality": burnInQuality,
+            "windowsShell": windowsShell,
             "useCustomCommand": useCustomCommand,
             "customCommand": customCommand
         }
@@ -272,6 +274,8 @@ QtObject {
         bloomQuality = settings.bloomQuality !== undefined ? settings.bloomQuality : bloomQuality
         burnInQuality = settings.burnInQuality
                 !== undefined ? settings.burnInQuality : burnInQuality
+
+        windowsShell = settings.windowsShell !== undefined ? settings.windowsShell : windowsShell
 
         useCustomCommand = settings.useCustomCommand
                 !== undefined ? settings.useCustomCommand : useCustomCommand
@@ -517,75 +521,6 @@ QtObject {
                 "screenCurvature": 0.5,
                 "screenRadius": 0.1,
                 "staticNoise": 0.2969,
-                "windowOpacity": 1
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Apple ]["
-            obj_string: '{
-                "ambientLight": 1.0,
-                "backgroundColor": "#001100",
-                "bloom": 0.3,
-                "brightness": 0.5,
-                "burnIn": 0.3,
-                "chromaColor": 0,
-                "contrast": 0.8,
-                "flickering": 0.2,
-                "fontColor": "#4dff6b",
-                "fontName": "APPLE_II_SCALED",
-                "fontSource": 0,
-                "fontWidth": 1.25,
-                "lineSpacing": 0.1,
-                "glowingLine": 0.3,
-                "horizontalSync": 0.2,
-                "jitter": 0.2,
-                "rasterization": 1,
-                "rgbShift": 0.0,
-                "saturationColor": 0,
-                "screenCurvature": 0.25,
-                "screenRadius": 0.3,
-                "staticNoise": 0.2,
-                "windowOpacity": 1,
-                "margin": 0.0,
-                "blinkingCursor": false,
-                "frameSize": 0.2,
-                "frameColor": "#ffffff",
-                "frameShininess": 0.8
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Apple ][ Dark"
-            obj_string: '{
-                "ambientLight": 0.3038,
-                "backgroundColor": "#000000",
-                "blinkingCursor": false,
-                "bloom": 0.5,
-                "brightness": 0.5,
-                "burnIn": 0.5017,
-                "chromaColor": 0,
-                "classicCrt": true,
-                "contrast": 0.85,
-                "flickering": 0.2,
-                "fontColor": "#00d56d",
-                "fontName": "CLASSIC_APPLE_II",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "frameColor": "#ffffff",
-                "frameShininess": 0,
-                "frameSize": 0,
-                "glowingLine": 0.22,
-                "horizontalSync": 0.16,
-                "jitter": 0.1,
-                "lineSpacing": 0.375,
-                "margin": 0.5,
-                "rasterization": 1,
-                "rgbShift": 0,
-                "saturationColor": 0,
-                "screenCurvature": 0.5,
-                "screenRadius": 0.1,
-                "staticNoise": 0.099,
                 "windowOpacity": 1
             }'
             builtin: true
@@ -861,6 +796,75 @@ QtObject {
                 "frameSize": 0.4,
                 "frameColor": "#cccccc",
                 "frameShininess": 0.3
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "Apple ]["
+            obj_string: '{
+                "ambientLight": 1.0,
+                "backgroundColor": "#001100",
+                "bloom": 0.3,
+                "brightness": 0.5,
+                "burnIn": 0.3,
+                "chromaColor": 0,
+                "contrast": 0.8,
+                "flickering": 0.2,
+                "fontColor": "#4dff6b",
+                "fontName": "APPLE_II_SCALED",
+                "fontSource": 0,
+                "fontWidth": 1.25,
+                "lineSpacing": 0.1,
+                "glowingLine": 0.3,
+                "horizontalSync": 0.2,
+                "jitter": 0.2,
+                "rasterization": 1,
+                "rgbShift": 0.0,
+                "saturationColor": 0,
+                "screenCurvature": 0.25,
+                "screenRadius": 0.3,
+                "staticNoise": 0.2,
+                "windowOpacity": 1,
+                "margin": 0.0,
+                "blinkingCursor": false,
+                "frameSize": 0.2,
+                "frameColor": "#ffffff",
+                "frameShininess": 0.8
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "Apple ][ Dark"
+            obj_string: '{
+                "ambientLight": 0.3038,
+                "backgroundColor": "#000000",
+                "blinkingCursor": false,
+                "bloom": 0.5,
+                "brightness": 0.5,
+                "burnIn": 0.5017,
+                "chromaColor": 0,
+                "classicCrt": true,
+                "contrast": 0.85,
+                "flickering": 0.2,
+                "fontColor": "#00d56d",
+                "fontName": "CLASSIC_APPLE_II",
+                "fontSource": 0,
+                "fontWidth": 1,
+                "frameColor": "#ffffff",
+                "frameShininess": 0,
+                "frameSize": 0,
+                "glowingLine": 0.22,
+                "horizontalSync": 0.16,
+                "jitter": 0.1,
+                "lineSpacing": 0.375,
+                "margin": 0.5,
+                "rasterization": 1,
+                "rgbShift": 0,
+                "saturationColor": 0,
+                "screenCurvature": 0.5,
+                "screenRadius": 0.1,
+                "staticNoise": 0.099,
+                "windowOpacity": 1
             }'
             builtin: true
         }

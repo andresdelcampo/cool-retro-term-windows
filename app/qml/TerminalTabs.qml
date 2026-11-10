@@ -38,8 +38,8 @@ Item {
         return String(rawTitle).trim()
     }
 
-    function addTab() {
-        tabsModel.append({ title: "" })
+    function addTab(shell) {
+        tabsModel.append({ title: "", shell: shell || "" })
         tabBar.currentIndex = tabsModel.count - 1
     }
 
@@ -130,6 +130,7 @@ Item {
             Repeater {
                 model: tabsModel
                 TerminalContainer {
+                    shellOverride: model.shell
                     property bool shouldHaveFocus: terminalWindow.active && StackLayout.isCurrentItem
                     isActive: StackLayout.isCurrentItem
                     onShouldHaveFocusChanged: {

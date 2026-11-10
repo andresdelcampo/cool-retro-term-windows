@@ -41,6 +41,7 @@ Item{
     property alias title: ksession.title
     property alias kterminal: kterminal
     property bool isActive: false
+    property string shellOverride: ""
 
     property size terminalSize: kterminal.terminalSize
     property size fontMetrics: kterminal.fontMetrics
@@ -168,13 +169,19 @@ Item{
 
         function startSession() {
             // Retrieve the variable set in main.cpp if arguments are passed.
-            if (defaultCmd) {
+            if (shellOverride === "cmd" || shellOverride === "wsl") {
+                ksession.setShellProgram(shellOverride === "cmd" ? "cmd.exe" : "wsl.exe");
+            } else if (shellOverride === "powershell") {
+                // Keep the backend default, which prefers PowerShell 7.
+            } else if (defaultCmd) {
                 ksession.setShellProgram(defaultCmd);
                 ksession.setArgs(defaultCmdArgs);
             } else if (appSettings.useCustomCommand) {
                 var args = Utils.tokenizeCommandLine(appSettings.customCommand);
                 ksession.setShellProgram(args[0]);
                 ksession.setArgs(args.slice(1));
+            } else if (appSettings.isWindows && appSettings.windowsShell !== "default") {
+                ksession.setShellProgram(appSettings.windowsShell === "cmd" ? "cmd.exe" : "wsl.exe");
             } else if (!defaultCmd && appSettings.isMacOS) {
                 // OSX Requires the following default parameters for auto login.
                 ksession.setArgs(["-i", "-l"]);
@@ -210,7 +217,8 @@ Item{
 
     Loader {
         id: menuLoader
-        sourceComponent: (appSettings.isMacOS || (appSettings.showMenubar && !terminalWindow.fullscreen) ? shortContextMenu : fullContextMenu)
+        sourceComponent: (appSettings.isMacOS || (!appSettings.isWindows && appSettings.showMenubar && !terminalWindow.fullscreen)
+                          ? shortContextMenu : fullContextMenu)
     }
     property alias contextmenu: menuLoader.item
 
