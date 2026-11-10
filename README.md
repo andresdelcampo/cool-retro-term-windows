@@ -48,11 +48,11 @@ The exe and all required Qt6 DLLs are in the same folder — no installation nee
 
 ## Building on Windows
 
-Follow the [Windows build instructions](HOW_TO_INSTALL.md#option-2-build-from-source) to build and deploy into the ignored `build/app` directory. Select **Profiles → Classic Amber (1.1.1)** to try the classic renderer.
+Follow the [Windows build instructions](HOW_TO_INSTALL.md#option-2-build-from-source) to build and deploy into the ignored `build/app` directory. Select **Profiles → Default Amber** to try the classic renderer.
 
 ### Classic 1.1.1 rendering
 
-The nine Classic profiles select the 1.1.1 rendering path. It applies scanline and pixel masks before bloom and uses the original curvature, bezel and glow effects. Futuristic retains its translucent window. The source build bakes the Qt shaders, and the corresponding `.qsb` assets are tracked.
+The 1.1.1 presets use a rendering path that applies scanline and pixel masks before bloom and uses the original curvature, bezel and glow effects. Futuristic retains its translucent window. The source build bakes the Qt shaders, and the corresponding `.qsb` assets are tracked.
 
 The presets were compared with the original 1.1.1 app in WSL at 1024×768 and 1× scaling. Measured row pitch matched for all nine. IBM 3278 and Futuristic render slightly heavier glyphs on Windows.
 

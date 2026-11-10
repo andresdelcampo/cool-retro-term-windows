@@ -69,7 +69,7 @@ ApplicationWindow {
             height: childrenRect.height
             Button {
                 anchors.left: parent.left
-                text: qsTr("License")
+                text: mainContent.state === "License" ? qsTr("Back") : qsTr("License")
                 onClicked: {
                     mainContent.state == "Default" ? mainContent.state
                                                      = "License" : mainContent.state = "Default"
@@ -100,12 +100,13 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignCenter
                 horizontalAlignment: Text.AlignHCenter
                 color: palette.text
-                text: appSettings.version + "\n" + qsTr(
-                          "Author: ") + "Filippo Scognamiglio\n" + qsTr(
-                          "Windows port: ") + "pushingpandas\n" + qsTr(
-                          "Website: ") + "https://pushingpandas.io\n" + qsTr(
-                          "Email: ") + "flscogna@gmail.com\n" + qsTr(
-                          "Source: ") + "https://github.com/pushingpandas/cool-retro-term-windows\n"
+                textFormat: Text.RichText
+                onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+                text: appSettings.version + "<br>" + qsTr(
+                          "Original author: ") + "Filippo Scognamiglio<br>" + qsTr(
+                          "Windows port: ") + "pushingpandas (A. Prior)<br>" + qsTr(
+                          "Windows fork: ") + "Andrés del Campo Novales<br>" + qsTr(
+                          "Source: ") + "<a href='https://github.com/andresdelcampo/cool-retro-term-windows'>github.com/andresdelcampo/cool-retro-term-windows</a>"
             }
         }
     }
@@ -118,9 +119,10 @@ ApplicationWindow {
                 readOnly: true
                 wrapMode: TextEdit.Wrap
                 color: palette.text
-                text: "Copyright (c) 2013-2025 Filippo Scognamiglio <flscogna@gmail.com>\n"
+                text: "Copyright (c) 2013-2021 Filippo Scognamiglio <flscogna@gmail.com>\n"
                       + "Windows port Copyright (c) 2024 pushingpandas\n\n"
-                      + "https://github.com/pushingpandas/cool-retro-term-windows\n\n" +
+                      + "Windows fork modifications Copyright (c) 2026 Andrés del Campo Novales\n\n"
+                      + "Source: https://github.com/andresdelcampo/cool-retro-term-windows\n\n" +
                       "cool-retro-term is free software: you can redistribute it and/or modify "
                       + "it under the terms of the GNU General Public License as published by "
                       + "the Free Software Foundation, either version 3 of the License, or "
@@ -130,7 +132,7 @@ ApplicationWindow {
                       + "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
                       + "GNU General Public License for more details.\n\n" +
                       "You should have received a copy of the GNU General Public License "
-                      + "along with this program.  If not, see <http://www.gnu.org/licenses/>."
+                      + "along with this program.  If not, see <https://www.gnu.org/licenses/>."
             }
         }
     }

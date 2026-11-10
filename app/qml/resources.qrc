@@ -35,9 +35,12 @@
         <file>fonts/iosevka/IosevkaTermNerdFontMono-Regular.ttf</file>
         <file>fonts/jetbrains-mono/JetBrainsMonoNerdFontMono-Regular.ttf</file>
         <file>../icons/32x32/cool-retro-term.png</file>
+        <file>../icons/classic-amber.ico</file>
         <file>Components/SizedLabel.qml</file>
         <file>fonts/atari-400-800/AtariClassic-Regular.ttf</file>
         <file>fonts/pet-me/PetMe64.ttf</file>
+        <file>fonts/1982-commodore64/C64_Pro_Mono-STYLE.ttf</file>
+        <file>fonts/1982-commodore64/license.txt</file>
         <file>fonts/pet-me/PetMe.ttf</file>
         <file>BurnInEffect.qml</file>
         <file>fonts/terminus/TerminessNerdFontMono-Regular.ttf</file>

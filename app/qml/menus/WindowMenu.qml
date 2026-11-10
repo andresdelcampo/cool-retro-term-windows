@@ -22,7 +22,7 @@ import QtQuick.Controls 2.3
 
 MenuBar {
     id: defaultMenuBar
-    visible: appSettings.isMacOS || appSettings.isWindows || appSettings.showMenubar
+    visible: appSettings.isMacOS || (appSettings.isWindows ? (appSettings.showWindowsMenubar && !appSettings.borderlessWindow) : (!terminalWindow.fullscreen && appSettings.showMenubar))
 
     Menu {
         title: qsTr("File")
@@ -48,6 +48,8 @@ MenuBar {
             onObjectAdded: (index, object) => viewMenu.insertItem(index, object)
             onObjectRemoved: (index, object) => viewMenu.removeItem(object)
         }
+        MenuItem { action: borderlessAction; visible: borderlessAction.enabled }
+        MenuItem { action: menubarAction; visible: menubarAction.enabled }
         MenuItem { action: zoomIn }
         MenuItem { action: zoomOut }
     }

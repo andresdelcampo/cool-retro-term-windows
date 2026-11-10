@@ -388,6 +388,8 @@ void FontManager::populateBundledFonts()
     // Match the released 1.1.1 AppImage's Apple ][ cell width.
     addBundledFont("CLASSIC_APPLE_II", "Apple ][ (1.1.1)",
                    ":/fonts/apple2/PrintChar21.ttf", 0.8, 8, true, {}, 3.5);
+    addBundledFont("C64_PRO_MONO_SCALED", "C64 Pro Mono",
+                   ":/fonts/1982-commodore64/C64_Pro_Mono-STYLE.ttf", 0.7, 8, true, {}, 3.5);
     addBundledFont("CLASSIC_IBM_DOS", "IBM DOS (1.1.1)",
                    ":/fonts/oldschool-pc-fonts/PxPlus_IBM_VGA8.ttf", 1.0, 16, true, {}, 2.0);
     addBundledFont("CLASSIC_IBM_3278", "HD: IBM 3278 (1.1.1)",

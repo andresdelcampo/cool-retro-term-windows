@@ -65,6 +65,14 @@ Menu {
             visible: fullscreenAction.enabled
         }
         MenuItem {
+            action: borderlessAction
+            visible: borderlessAction.enabled
+        }
+        MenuItem {
+            action: menubarAction
+            visible: menubarAction.enabled
+        }
+        MenuItem {
             action: zoomIn
         }
         MenuItem {

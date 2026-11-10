@@ -38,6 +38,7 @@ ApplicationWindow {
     minimumHeight: 240
 
     visible: false
+    flags: Qt.Window | (appSettings.isWindows && appSettings.borderlessWindow ? Qt.FramelessWindowHint : 0)
 
     property bool fullscreen: false
     onFullscreenChanged: visibility = (fullscreen ? Window.FullScreen : Window.Windowed)
@@ -58,6 +59,22 @@ ApplicationWindow {
         onTriggered: fullscreen = !fullscreen
         checkable: true
         checked: fullscreen
+    }
+    Action {
+        id: borderlessAction
+        text: qsTr("Borderless Window")
+        enabled: appSettings.isWindows
+        checkable: true
+        checked: appSettings.borderlessWindow
+        onTriggered: appSettings.borderlessWindow = !appSettings.borderlessWindow
+    }
+    Action {
+        id: menubarAction
+        text: qsTr("Show Menu Bar")
+        enabled: appSettings.isWindows && !appSettings.borderlessWindow
+        checkable: true
+        checked: appSettings.showWindowsMenubar
+        onTriggered: appSettings.showWindowsMenubar = !appSettings.showWindowsMenubar
     }
     Action {
         id: newWindowAction

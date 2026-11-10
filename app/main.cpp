@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_MAC)
     app.setWindowIcon(QIcon(":../icons/32x32/cool-retro-term.png"));
 #elif defined(Q_OS_WIN)
-    app.setWindowIcon(QIcon(":../icons/32x32/cool-retro-term.png"));
+    app.setWindowIcon(QIcon(":/icons/classic-amber.ico"));
 #else
     app.setWindowIcon(QIcon::fromTheme("cool-retro-term", QIcon(":../icons/32x32/cool-retro-term.png")));
     QGuiApplication::setDesktopFileName(QStringLiteral("cool-retro-term"));

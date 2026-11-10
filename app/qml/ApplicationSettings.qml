@@ -42,6 +42,8 @@ QtObject {
 
     // GENERAL SETTINGS ///////////////////////////////////////////////////////
     property bool showMenubar: false
+    property bool showWindowsMenubar: true
+    property bool borderlessWindow: false
 
     property bool showTerminalSize: true
     property real windowScaling: 1.0
@@ -172,6 +174,8 @@ QtObject {
             "showTerminalSize": showTerminalSize,
             "fontScaling": fontScaling,
             "showMenubar": showMenubar,
+            "showWindowsMenubar": showWindowsMenubar,
+            "borderlessWindow": borderlessWindow,
             "bloomQuality": bloomQuality,
             "burnInQuality": burnInQuality,
             "useCustomCommand": useCustomCommand,
@@ -224,15 +228,16 @@ QtObject {
         var profileString = storage.getSetting("_CURRENT_PROFILE")
 
         if (!settingsString)
-            return
+            return false
         if (!profileString)
-            return
+            return false
 
         loadSettingsString(settingsString)
         loadProfileString(profileString)
 
         if (verbose)
             console.log("Loading settings: " + settingsString + profileString)
+        return true
     }
 
     function storeSettings() {
@@ -261,6 +266,8 @@ QtObject {
         fontScaling = settings.fontScaling !== undefined ? settings.fontScaling : fontScaling
 
         showMenubar = settings.showMenubar !== undefined ? settings.showMenubar : showMenubar
+        showWindowsMenubar = settings.showWindowsMenubar !== undefined ? settings.showWindowsMenubar : showWindowsMenubar
+        borderlessWindow = settings.borderlessWindow !== undefined ? settings.borderlessWindow : borderlessWindow
 
         bloomQuality = settings.bloomQuality !== undefined ? settings.bloomQuality : bloomQuality
         burnInQuality = settings.burnInQuality
@@ -377,68 +384,209 @@ QtObject {
         ListElement {
             text: "Default Amber"
             obj_string: '{
-                "ambientLight": 0.3,
+                "ambientLight": 0.2,
                 "backgroundColor": "#000000",
-                "bloom": 0.6,
+                "bloom": 0.5538,
                 "brightness": 0.5,
-                "burnIn": 0.3,
-                "chromaColor": 0.2,
-                "contrast": 0.8,
+                "burnIn": 0.2517,
+                "chromaColor": 0.2483,
+                "contrast": 0.7959,
                 "flickering": 0.1,
                 "fontColor": "#ff8100",
-                "fontName": "TERMINESS_SCALED",
+                "fontName": "CLASSIC_TERMINUS_SCALED",
                 "fontSource": 0,
                 "fontWidth": 1,
-                "lineSpacing": 0.1,
+                "lineSpacing": 0.0833,
                 "glowingLine": 0.2,
-                "horizontalSync": 0.1,
-                "jitter": 0.2,
+                "horizontalSync": 0.08,
+                "jitter": 0.1997,
                 "rasterization": 0,
                 "rgbShift": 0,
-                "saturationColor": 0.2,
-                "screenCurvature": 0.2,
+                "saturationColor": 0.2483,
+                "screenCurvature": 0.3,
                 "screenRadius": 0.1,
-                "staticNoise": 0.1,
+                "staticNoise": 0.1198,
                 "windowOpacity": 1,
-                "margin": 0.3,
+                "margin": 0.5,
                 "blinkingCursor": false,
-                "frameSize": 0.1,
-                "frameColor": "#cfcfcf",
-                "frameShininess": 0.3
+                "classicCrt": true,
+                "frameSize": 0,
+                "frameColor": "#ffffff",
+                "frameShininess": 0
             }'
             builtin: true
         }
         ListElement {
             text: "Monochrome Green"
             obj_string: '{
-                "ambientLight": 0.3,
+                "ambientLight": 0.2,
                 "backgroundColor": "#000000",
-                "bloom": 0.5,
+                "blinkingCursor": false,
+                "bloom": 0.5538,
                 "brightness": 0.5,
-                "burnIn": 0.3,
+                "burnIn": 0.2517,
                 "chromaColor": 0.0,
-                "contrast": 0.8,
+                "classicCrt": true,
+                "contrast": 0.7959,
                 "flickering": 0.1,
                 "fontColor": "#0ccc68",
-                "fontName": "DEPARTURE_MONO_SCALED",
+                "fontName": "CLASSIC_TERMINUS_SCALED",
                 "fontSource": 0,
                 "fontWidth": 1,
-                "lineSpacing": 0.1,
+                "frameColor": "#ffffff",
+                "frameShininess": 0,
+                "frameSize": 0,
                 "glowingLine": 0.2,
-                "horizontalSync": 0.1,
-                "jitter": 0.2,
+                "horizontalSync": 0.08,
+                "jitter": 0.1997,
+                "lineSpacing": 0.0833,
+                "margin": 0.5,
                 "rasterization": 0,
                 "rgbShift": 0,
                 "saturationColor": 0.0,
                 "screenCurvature": 0.3,
-                "screenRadius": 0.2,
-                "staticNoise": 0.1,
-                "windowOpacity": 1,
-                "margin": 0.3,
+                "screenRadius": 0.1,
+                "staticNoise": 0.1198,
+                "windowOpacity": 1
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "Green Scanlines"
+            obj_string: '{
+                "ambientLight": 0,
+                "backgroundColor": "#000000",
                 "blinkingCursor": false,
-                "frameSize": 0.1,
-                "frameColor": "#d4d4d4",
-                "frameShininess": 0.1
+                "bloom": 0.6,
+                "brightness": 0.5,
+                "burnIn": 0.3,
+                "chromaColor": 0.5,
+                "classicCrt": true,
+                "contrast": 0.6,
+                "flickering": 0.1,
+                "fontColor": "#7cff4f",
+                "fontName": "CLASSIC_PRO_FONT",
+                "fontSource": 0,
+                "fontWidth": 1,
+                "frameColor": "#ffffff",
+                "frameShininess": 0,
+                "frameSize": 0,
+                "glowingLine": 0.2,
+                "horizontalSync": 0.151,
+                "jitter": 0.11,
+                "lineSpacing": 0.0833,
+                "margin": 0.5,
+                "rasterization": 1,
+                "rgbShift": 0,
+                "saturationColor": 0.5,
+                "screenCurvature": 0.3,
+                "screenRadius": 0.1,
+                "staticNoise": 0.15,
+                "windowOpacity": 1
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "Vintage"
+            obj_string: '{
+                "ambientLight": 0.5,
+                "backgroundColor": "#000000",
+                "blinkingCursor": false,
+                "bloom": 0.4983,
+                "brightness": 0.5014,
+                "burnIn": 0.4983,
+                "chromaColor": 0,
+                "classicCrt": true,
+                "contrast": 0.7473,
+                "flickering": 0.9,
+                "fontColor": "#00ff3e",
+                "fontName": "CLASSIC_COMMODORE_PET",
+                "fontSource": 0,
+                "fontWidth": 0.7,
+                "frameColor": "#ffffff",
+                "frameShininess": 0,
+                "frameSize": 0,
+                "glowingLine": 0.3,
+                "horizontalSync": 0.42,
+                "jitter": 0.4,
+                "lineSpacing": 0.375,
+                "margin": 0.5,
+                "rasterization": 1,
+                "rgbShift": 0.2969,
+                "saturationColor": 0,
+                "screenCurvature": 0.5,
+                "screenRadius": 0.1,
+                "staticNoise": 0.2969,
+                "windowOpacity": 1
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "Apple ]["
+            obj_string: '{
+                "ambientLight": 1.0,
+                "backgroundColor": "#001100",
+                "bloom": 0.3,
+                "brightness": 0.5,
+                "burnIn": 0.3,
+                "chromaColor": 0,
+                "contrast": 0.8,
+                "flickering": 0.2,
+                "fontColor": "#4dff6b",
+                "fontName": "APPLE_II_SCALED",
+                "fontSource": 0,
+                "fontWidth": 1.25,
+                "lineSpacing": 0.1,
+                "glowingLine": 0.3,
+                "horizontalSync": 0.2,
+                "jitter": 0.2,
+                "rasterization": 1,
+                "rgbShift": 0.0,
+                "saturationColor": 0,
+                "screenCurvature": 0.25,
+                "screenRadius": 0.3,
+                "staticNoise": 0.2,
+                "windowOpacity": 1,
+                "margin": 0.0,
+                "blinkingCursor": false,
+                "frameSize": 0.2,
+                "frameColor": "#ffffff",
+                "frameShininess": 0.8
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "Apple ][ Dark"
+            obj_string: '{
+                "ambientLight": 0.3038,
+                "backgroundColor": "#000000",
+                "blinkingCursor": false,
+                "bloom": 0.5,
+                "brightness": 0.5,
+                "burnIn": 0.5017,
+                "chromaColor": 0,
+                "classicCrt": true,
+                "contrast": 0.85,
+                "flickering": 0.2,
+                "fontColor": "#00d56d",
+                "fontName": "CLASSIC_APPLE_II",
+                "fontSource": 0,
+                "fontWidth": 1,
+                "frameColor": "#ffffff",
+                "frameShininess": 0,
+                "frameSize": 0,
+                "glowingLine": 0.22,
+                "horizontalSync": 0.16,
+                "jitter": 0.1,
+                "lineSpacing": 0.375,
+                "margin": 0.5,
+                "rasterization": 1,
+                "rgbShift": 0,
+                "saturationColor": 0,
+                "screenCurvature": 0.5,
+                "screenRadius": 0.1,
+                "staticNoise": 0.099,
+                "windowOpacity": 1
             }'
             builtin: true
         }
@@ -464,7 +612,7 @@ QtObject {
                 "rasterization": 0,
                 "rgbShift": 0,
                 "saturationColor": 0.2,
-                "screenCurvature": 0.4,
+                "screenCurvature": 0.2,
                 "screenRadius": 0.1,
                 "staticNoise": 0.1,
                 "windowOpacity": 1,
@@ -477,7 +625,145 @@ QtObject {
             builtin: true
         }
         ListElement {
+            text: "IBM DOS"
+            obj_string: '{
+                "ambientLight": 0.151,
+                "backgroundColor": "#000000",
+                "blinkingCursor": false,
+                "bloom": 0.2969,
+                "brightness": 0.5,
+                "burnIn": 0.0469,
+                "chromaColor": 1,
+                "classicCrt": true,
+                "contrast": 0.85,
+                "flickering": 0.0955,
+                "fontColor": "#ffffff",
+                "fontName": "CLASSIC_IBM_DOS",
+                "fontSource": 0,
+                "fontWidth": 1,
+                "frameColor": "#ffffff",
+                "frameShininess": 0,
+                "frameSize": 0,
+                "glowingLine": 0.1545,
+                "horizontalSync": 0,
+                "jitter": 0.1545,
+                "lineSpacing": 0.1875,
+                "margin": 0.5,
+                "rasterization": 0,
+                "rgbShift": 0.15,
+                "saturationColor": 0,
+                "screenCurvature": 0.4,
+                "screenRadius": 0.1,
+                "staticNoise": 0.0503,
+                "windowOpacity": 1
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "IBM VGA 8x16"
+            obj_string: '{
+                "ambientLight": 0.2,
+                "backgroundColor": "#000000",
+                "bloom": 0.2,
+                "brightness": 0.6,
+                "burnIn": 0.1,
+                "chromaColor": 0.85,
+                "contrast": 1.0,
+                "flickering": 0.1,
+                "fontColor": "#c0c0c0",
+                "fontName": "IBM_VGA_8x16",
+                "fontSource": 0,
+                "fontWidth": 1,
+                "lineSpacing": 0.1,
+                "glowingLine": 0.1,
+                "horizontalSync": 0.0,
+                "jitter": 0.0,
+                "rasterization": 1,
+                "rgbShift": 0.1,
+                "saturationColor": 0,
+                "screenCurvature": 0.12,
+                "screenRadius": 0.1,
+                "staticNoise": 0.0,
+                "windowOpacity": 1,
+                "margin": 0.2,
+                "blinkingCursor": false,
+                "frameSize": 0.1,
+                "frameColor": "#ffffff",
+                "frameShininess": 0.3
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "IBM 3278"
+            obj_string: '{
+                "ambientLight": 0.1,
+                "backgroundColor": "#000000",
+                "blinkingCursor": false,
+                "bloom": 0.2969,
+                "brightness": 0.5,
+                "burnIn": 0.6,
+                "chromaColor": 0,
+                "classicCrt": true,
+                "contrast": 0.85,
+                "flickering": 0,
+                "fontColor": "#0ccc68",
+                "fontName": "CLASSIC_IBM_3278",
+                "fontSource": 0,
+                "fontWidth": 1,
+                "frameColor": "#ffffff",
+                "frameShininess": 0,
+                "frameSize": 0,
+                "glowingLine": 0,
+                "horizontalSync": 0,
+                "jitter": 0,
+                "lineSpacing": 0.2,
+                "margin": 0.5,
+                "rasterization": 0,
+                "rgbShift": 0,
+                "saturationColor": 0,
+                "screenCurvature": 0.2,
+                "screenRadius": 0.1,
+                "staticNoise": 0,
+                "windowOpacity": 1
+            }'
+            builtin: true
+        }
+        ListElement {
             text: "Commodore 64"
+            obj_string: '{
+                "ambientLight": 0.4,
+                "backgroundColor": "#3b3b8f",
+                "bloom": 0.4,
+                "brightness": 0.6,
+                "burnIn": 0.1,
+                "chromaColor": 0.0,
+                "contrast": 0.7,
+                "flickering": 0.1,
+                "fontColor": "#a9a7ff",
+                "fontName": "C64_PRO_MONO_SCALED",
+                "fontSource": 0,
+                "fontWidth": 1,
+                "lineSpacing": 0.375,
+                "glowingLine": 0.1,
+                "horizontalSync": 0.0,
+                "jitter": 0.0,
+                "rasterization": 1,
+                "rgbShift": 0,
+                "saturationColor": 0,
+                "screenCurvature": 0.1,
+                "screenRadius": 0.1,
+                "staticNoise": 0.1,
+                "windowOpacity": 1,
+                "margin": 0.3,
+                "blinkingCursor": false,
+                "frameSize": 0.5,
+                "frameColor": "#999999",
+                "frameShininess": 0.0
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "Commodore 64 Narrow"
             obj_string: '{
                 "ambientLight": 0.4,
                 "backgroundColor": "#3b3b8f",
@@ -498,7 +784,7 @@ QtObject {
                 "rasterization": 1,
                 "rgbShift": 0,
                 "saturationColor": 0,
-                "screenCurvature": 0.5,
+                "screenCurvature": 0.1,
                 "screenRadius": 0.1,
                 "staticNoise": 0.1,
                 "windowOpacity": 1,
@@ -532,7 +818,7 @@ QtObject {
                 "rasterization": 1,
                 "rgbShift": 0.0,
                 "saturationColor": 0,
-                "screenCurvature": 0.7,
+                "screenCurvature": 0.3,
                 "screenRadius": 0.3,
                 "staticNoise": 0.2,
                 "windowOpacity": 1,
@@ -541,40 +827,6 @@ QtObject {
                 "frameSize": 0.5,
                 "frameColor": "#000000",
                 "frameShininess": 0.6
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Apple ]["
-            obj_string: '{
-                "ambientLight": 1.0,
-                "backgroundColor": "#001100",
-                "bloom": 0.3,
-                "brightness": 0.5,
-                "burnIn": 0.3,
-                "chromaColor": 0,
-                "contrast": 0.8,
-                "flickering": 0.2,
-                "fontColor": "#4dff6b",
-                "fontName": "APPLE_II_SCALED",
-                "fontSource": 0,
-                "fontWidth": 1.25,
-                "lineSpacing": 0.1,
-                "glowingLine": 0.3,
-                "horizontalSync": 0.2,
-                "jitter": 0.2,
-                "rasterization": 1,
-                "rgbShift": 0.0,
-                "saturationColor": 0,
-                "screenCurvature": 0.5,
-                "screenRadius": 0.3,
-                "staticNoise": 0.2,
-                "windowOpacity": 1,
-                "margin": 0.0,
-                "blinkingCursor": false,
-                "frameSize": 0.2,
-                "frameColor": "#ffffff",
-                "frameShininess": 0.8
             }'
             builtin: true
         }
@@ -600,7 +852,7 @@ QtObject {
                 "rasterization": 1,
                 "rgbShift": 0.0,
                 "saturationColor": 0,
-                "screenCurvature": 0.4,
+                "screenCurvature": 0.2,
                 "screenRadius": 0.2,
                 "staticNoise": 0.1,
                 "windowOpacity": 1,
@@ -613,58 +865,24 @@ QtObject {
             builtin: true
         }
         ListElement {
-            text: "IBM VGA 8x16"
+            text: "E-Ink"
             obj_string: '{
-                "ambientLight": 0.2,
-                "backgroundColor": "#000000",
-                "bloom": 0.2,
-                "brightness": 0.6,
-                "burnIn": 0.1,
-                "chromaColor": 0.5,
-                "contrast": 1.0,
-                "flickering": 0.1,
-                "fontColor": "#c0c0c0",
-                "fontName": "IBM_VGA_8x16",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "lineSpacing": 0.1,
-                "glowingLine": 0.1,
-                "horizontalSync": 0.0,
-                "jitter": 0.0,
-                "rasterization": 1,
-                "rgbShift": 0.1,
-                "saturationColor": 0,
-                "screenCurvature": 0.3,
-                "screenRadius": 0.1,
-                "staticNoise": 0.0,
-                "windowOpacity": 1,
-                "margin": 0.2,
-                "blinkingCursor": false,
-                "frameSize": 0.1,
-                "frameColor": "#ffffff",
-                "frameShininess": 0.3
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "IBM 3278 Reborn"
-            obj_string: '{
-                "ambientLight": 0.2,
-                "backgroundColor": "#000000",
-                "bloom": 0.2,
-                "brightness": 0.5,
-                "burnIn": 0.5,
+                "ambientLight": 0.6,
+                "backgroundColor": "#f2f2ec",
+                "bloom": 0.0,
+                "brightness": 1.0,
+                "burnIn": 0.6,
                 "chromaColor": 0,
-                "contrast": 0.8,
-                "flickering": 0,
-                "fontColor": "#3cff7a",
-                "fontName": "IBM_3278",
+                "contrast": 0.5,
+                "flickering": 0.0,
+                "fontColor": "#2c2b2b",
+                "fontName": "HACK",
                 "fontSource": 0,
                 "fontWidth": 1,
                 "lineSpacing": 0.1,
                 "glowingLine": 0.0,
-                "horizontalSync": 0,
-                "jitter": 0,
+                "horizontalSync": 0.0,
+                "jitter": 0.0,
                 "rasterization": 4,
                 "rgbShift": 0,
                 "saturationColor": 0,
@@ -675,7 +893,41 @@ QtObject {
                 "margin": 0.1,
                 "blinkingCursor": false,
                 "frameSize": 0,
-                "frameColor": "#ffffff",
+                "frameColor": "#cdcdcd",
+                "frameShininess": 0.2
+            }'
+            builtin: true
+        }
+        ListElement {
+            text: "Plasma"
+            obj_string: '{
+                "ambientLight": 0.1,
+                "backgroundColor": "#070014",
+                "bloom": 0.7,
+                "brightness": 0.6,
+                "burnIn": 0.1,
+                "chromaColor": 1,
+                "contrast": 0.8,
+                "flickering": 0.1,
+                "fontColor": "#ff9bd6",
+                "fontName": "FIRA_CODE",
+                "fontSource": 0,
+                "fontWidth": 1,
+                "lineSpacing": 0.1,
+                "glowingLine": 0.2,
+                "horizontalSync": 0.0,
+                "jitter": 0.1,
+                "rasterization": 4,
+                "rgbShift": 0.1,
+                "saturationColor": 0.8,
+                "screenCurvature": 0,
+                "screenRadius": 0.0,
+                "staticNoise": 0.1,
+                "windowOpacity": 1.0,
+                "margin": 0.1,
+                "blinkingCursor": false,
+                "frameSize": 0,
+                "frameColor": "#d0d0d0",
                 "frameShininess": 0.2
             }'
             builtin: true
@@ -749,40 +1001,6 @@ QtObject {
             builtin: true
         }
         ListElement {
-            text: "Plasma"
-            obj_string: '{
-                "ambientLight": 0.1,
-                "backgroundColor": "#070014",
-                "bloom": 0.7,
-                "brightness": 0.6,
-                "burnIn": 0.1,
-                "chromaColor": 1,
-                "contrast": 0.8,
-                "flickering": 0.1,
-                "fontColor": "#ff9bd6",
-                "fontName": "FIRA_CODE",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "lineSpacing": 0.1,
-                "glowingLine": 0.2,
-                "horizontalSync": 0.0,
-                "jitter": 0.1,
-                "rasterization": 4,
-                "rgbShift": 0.1,
-                "saturationColor": 0.8,
-                "screenCurvature": 0,
-                "screenRadius": 0.0,
-                "staticNoise": 0.1,
-                "windowOpacity": 1.0,
-                "margin": 0.1,
-                "blinkingCursor": false,
-                "frameSize": 0,
-                "frameColor": "#d0d0d0",
-                "frameShininess": 0.2
-            }'
-            builtin: true
-        }
-        ListElement {
             text: "Boring"
             obj_string: '{
                 "ambientLight": 0.1,
@@ -817,146 +1035,7 @@ QtObject {
             builtin: true
         }
         ListElement {
-            text: "E-Ink"
-            obj_string: '{
-                "ambientLight": 0.6,
-                "backgroundColor": "#f2f2ec",
-                "bloom": 0.0,
-                "brightness": 1.0,
-                "burnIn": 0.6,
-                "chromaColor": 0,
-                "contrast": 0.5,
-                "flickering": 0.0,
-                "fontColor": "#101010",
-                "fontName": "HACK",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "lineSpacing": 0.1,
-                "glowingLine": 0.0,
-                "horizontalSync": 0.0,
-                "jitter": 0.0,
-                "rasterization": 4,
-                "rgbShift": 0,
-                "saturationColor": 0,
-                "screenCurvature": 0,
-                "screenRadius": 0.0,
-                "staticNoise": 0.0,
-                "windowOpacity": 1,
-                "margin": 0.1,
-                "blinkingCursor": false,
-                "frameSize": 0,
-                "frameColor": "#cdcdcd",
-                "frameShininess": 0.2
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Classic Amber (1.1.1)"
-            obj_string: '{
-                "ambientLight": 0.2,
-                "backgroundColor": "#000000",
-                "bloom": 0.5538,
-                "brightness": 0.5,
-                "burnIn": 0.2517,
-                "chromaColor": 0.2483,
-                "contrast": 0.7959,
-                "flickering": 0.1,
-                "fontColor": "#ff8100",
-                "fontName": "CLASSIC_TERMINUS_SCALED",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "lineSpacing": 0.0833,
-                "glowingLine": 0.2,
-                "horizontalSync": 0.08,
-                "jitter": 0.1997,
-                "rasterization": 0,
-                "rgbShift": 0,
-                "saturationColor": 0.2483,
-                "screenCurvature": 0.3,
-                "screenRadius": 0.1,
-                "staticNoise": 0.1198,
-                "windowOpacity": 1,
-                "margin": 0.5,
-                "blinkingCursor": false,
-                "classicCrt": true,
-                "frameSize": 0,
-                "frameColor": "#ffffff",
-                "frameShininess": 0
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Classic Monochrome Green (1.1.1)"
-            obj_string: '{
-                "ambientLight": 0.2,
-                "backgroundColor": "#000000",
-                "blinkingCursor": false,
-                "bloom": 0.5538,
-                "brightness": 0.5,
-                "burnIn": 0.2517,
-                "chromaColor": 0.0,
-                "classicCrt": true,
-                "contrast": 0.7959,
-                "flickering": 0.1,
-                "fontColor": "#0ccc68",
-                "fontName": "CLASSIC_TERMINUS_SCALED",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "frameColor": "#ffffff",
-                "frameShininess": 0,
-                "frameSize": 0,
-                "glowingLine": 0.2,
-                "horizontalSync": 0.08,
-                "jitter": 0.1997,
-                "lineSpacing": 0.0833,
-                "margin": 0.5,
-                "rasterization": 0,
-                "rgbShift": 0,
-                "saturationColor": 0.0,
-                "screenCurvature": 0.3,
-                "screenRadius": 0.1,
-                "staticNoise": 0.1198,
-                "windowOpacity": 1
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Classic Green Scanlines (1.1.1)"
-            obj_string: '{
-                "ambientLight": 0,
-                "backgroundColor": "#000000",
-                "blinkingCursor": false,
-                "bloom": 0.6,
-                "brightness": 0.5,
-                "burnIn": 0.3,
-                "chromaColor": 0.5,
-                "classicCrt": true,
-                "contrast": 0.6,
-                "flickering": 0.1,
-                "fontColor": "#7cff4f",
-                "fontName": "CLASSIC_PRO_FONT",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "frameColor": "#ffffff",
-                "frameShininess": 0,
-                "frameSize": 0,
-                "glowingLine": 0.2,
-                "horizontalSync": 0.151,
-                "jitter": 0.11,
-                "lineSpacing": 0.0833,
-                "margin": 0.5,
-                "rasterization": 1,
-                "rgbShift": 0,
-                "saturationColor": 0.5,
-                "screenCurvature": 0.3,
-                "screenRadius": 0.1,
-                "staticNoise": 0.15,
-                "windowOpacity": 1
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Classic Pixelated (1.1.1)"
+            text: "Pixelated"
             obj_string: '{
                 "ambientLight": 0,
                 "backgroundColor": "#000000",
@@ -991,147 +1070,7 @@ QtObject {
             builtin: true
         }
         ListElement {
-            text: "Classic Apple ][ (1.1.1)"
-            obj_string: '{
-                "ambientLight": 0.3038,
-                "backgroundColor": "#000000",
-                "blinkingCursor": false,
-                "bloom": 0.5,
-                "brightness": 0.5,
-                "burnIn": 0.5017,
-                "chromaColor": 0,
-                "classicCrt": true,
-                "contrast": 0.85,
-                "flickering": 0.2,
-                "fontColor": "#00d56d",
-                "fontName": "CLASSIC_APPLE_II",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "frameColor": "#ffffff",
-                "frameShininess": 0,
-                "frameSize": 0,
-                "glowingLine": 0.22,
-                "horizontalSync": 0.16,
-                "jitter": 0.1,
-                "lineSpacing": 0.375,
-                "margin": 0.5,
-                "rasterization": 1,
-                "rgbShift": 0,
-                "saturationColor": 0,
-                "screenCurvature": 0.5,
-                "screenRadius": 0.1,
-                "staticNoise": 0.099,
-                "windowOpacity": 1
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Classic Vintage (1.1.1)"
-            obj_string: '{
-                "ambientLight": 0.5,
-                "backgroundColor": "#000000",
-                "blinkingCursor": false,
-                "bloom": 0.4983,
-                "brightness": 0.5014,
-                "burnIn": 0.4983,
-                "chromaColor": 0,
-                "classicCrt": true,
-                "contrast": 0.7473,
-                "flickering": 0.9,
-                "fontColor": "#00ff3e",
-                "fontName": "CLASSIC_COMMODORE_PET",
-                "fontSource": 0,
-                "fontWidth": 0.7,
-                "frameColor": "#ffffff",
-                "frameShininess": 0,
-                "frameSize": 0,
-                "glowingLine": 0.3,
-                "horizontalSync": 0.42,
-                "jitter": 0.4,
-                "lineSpacing": 0.375,
-                "margin": 0.5,
-                "rasterization": 1,
-                "rgbShift": 0.2969,
-                "saturationColor": 0,
-                "screenCurvature": 0.5,
-                "screenRadius": 0.1,
-                "staticNoise": 0.2969,
-                "windowOpacity": 1
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Classic IBM DOS (1.1.1)"
-            obj_string: '{
-                "ambientLight": 0.151,
-                "backgroundColor": "#000000",
-                "blinkingCursor": false,
-                "bloom": 0.2969,
-                "brightness": 0.5,
-                "burnIn": 0.0469,
-                "chromaColor": 1,
-                "classicCrt": true,
-                "contrast": 0.85,
-                "flickering": 0.0955,
-                "fontColor": "#ffffff",
-                "fontName": "CLASSIC_IBM_DOS",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "frameColor": "#ffffff",
-                "frameShininess": 0,
-                "frameSize": 0,
-                "glowingLine": 0.1545,
-                "horizontalSync": 0,
-                "jitter": 0.1545,
-                "lineSpacing": 0.1875,
-                "margin": 0.5,
-                "rasterization": 0,
-                "rgbShift": 0.3524,
-                "saturationColor": 0,
-                "screenCurvature": 0.4,
-                "screenRadius": 0.1,
-                "staticNoise": 0.0503,
-                "windowOpacity": 1
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Classic IBM 3278 (1.1.1)"
-            obj_string: '{
-                "ambientLight": 0.1,
-                "backgroundColor": "#000000",
-                "blinkingCursor": false,
-                "bloom": 0.2969,
-                "brightness": 0.5,
-                "burnIn": 0.6,
-                "chromaColor": 0,
-                "classicCrt": true,
-                "contrast": 0.85,
-                "flickering": 0,
-                "fontColor": "#0ccc68",
-                "fontName": "CLASSIC_IBM_3278",
-                "fontSource": 0,
-                "fontWidth": 1,
-                "frameColor": "#ffffff",
-                "frameShininess": 0,
-                "frameSize": 0,
-                "glowingLine": 0,
-                "horizontalSync": 0,
-                "jitter": 0,
-                "lineSpacing": 0.2,
-                "margin": 0.5,
-                "rasterization": 0,
-                "rgbShift": 0,
-                "saturationColor": 0,
-                "screenCurvature": 0.2,
-                "screenRadius": 0.1,
-                "staticNoise": 0,
-                "windowOpacity": 1
-            }'
-            builtin: true
-        }
-        ListElement {
-            text: "Classic Futuristic (1.1.1)"
+            text: "Futuristic"
             obj_string: '{
                 "ambientLight": 0,
                 "backgroundColor": "#000000",
@@ -1172,6 +1111,22 @@ QtObject {
             if (profilesList.get(i).text === name)
                 return i
         }
+        // Accept names used by launchers for the original Classic preview.
+        var renamedProfiles = {
+            "Classic Amber (1.1.1)": "Default Amber",
+            "Classic Monochrome Green (1.1.1)": "Monochrome Green",
+            "Classic IBM 3278 (1.1.1)": "IBM 3278",
+            "Classic IBM DOS (1.1.1)": "IBM DOS",
+            "Classic Green Scanlines (1.1.1)": "Green Scanlines",
+            "Classic Pixelated (1.1.1)": "Pixelated",
+            "Classic Apple ][ (1.1.1)": "Apple ][ Dark",
+            "Classic Apple ][": "Apple ][ Dark",
+            "Classic Vintage (1.1.1)": "Vintage",
+            "Classic Futuristic (1.1.1)": "Futuristic",
+            "Commodore 64 (Pro Mono)": "Commodore 64"
+        }
+        if (Object.prototype.hasOwnProperty.call(renamedProfiles, name))
+            return getProfileIndexByName(renamedProfiles[name])
         return -1
     }
 
@@ -1181,9 +1136,8 @@ QtObject {
         if (args.indexOf("--verbose") !== -1) {
             verbose = true
         }
-        if (args.indexOf("--default-settings") === -1) {
-            loadSettings()
-        }
+        if (args.indexOf("--default-settings") !== -1 || !loadSettings())
+            loadProfile(0)
 
         loadCustomProfiles()
 

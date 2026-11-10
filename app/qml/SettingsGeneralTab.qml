@@ -36,18 +36,28 @@ ColumnLayout {
                 Layout.fillHeight: true
                 model: appSettings.profilesList
                 clip: true
+                ScrollBar.vertical: ScrollBar { }
                 delegate: Rectangle {
-                    width: label.width
-                    height: label.height
-                    color: (index == profilesView.currentIndex) ? palette.highlight : palette.base
+                    width: profilesView.width
+                    height: label.implicitHeight + 8
+                    color: index === profilesView.currentIndex ? palette.highlight : "transparent"
                     Label {
                         id: label
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
                         text: appSettings.profilesList.get(index).text
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: profilesView.currentIndex = index
-                            onDoubleClicked: appSettings.loadProfile(index)
+                        color: index === profilesView.currentIndex ? palette.highlightedText : palette.windowText
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            profilesView.currentIndex = index
+                            profilesView.forceActiveFocus()
                         }
+                        onDoubleClicked: appSettings.loadProfile(index)
                     }
                 }
             }
@@ -82,11 +92,7 @@ ColumnLayout {
                                  currentIndex).builtin
                     onClicked: {
                         appSettings.profilesList.remove(currentIndex)
-                        profilesView.selection.clear()
-
-                        // TODO This is a very ugly workaround. The view didn't update on Qt 5.3.2.
-                        profilesView.model = 0
-                        profilesView.model = appSettings.profilesList
+                        profilesView.currentIndex = -1
                     }
                 }
                 Item {

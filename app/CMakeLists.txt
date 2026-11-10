@@ -154,6 +154,15 @@ target_link_libraries(cool-retro-term PRIVATE
 )
 
 if(WIN32)
+    enable_language(RC)
+    configure_file(windows-icon.rc.in windows-icon.rc @ONLY)
+    set(windows_icon_rc "${CMAKE_CURRENT_BINARY_DIR}/windows-icon.rc")
+    # Keep the resource compiler independent of the app's C++ include paths.
+    add_library(cool-retro-term-icon OBJECT "${windows_icon_rc}")
+    set_target_properties(cool-retro-term-icon PROPERTIES AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    set_source_files_properties("${windows_icon_rc}" PROPERTIES
+        OBJECT_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/icons/classic-amber.ico")
+    target_sources(cool-retro-term PRIVATE $<TARGET_OBJECTS:cool-retro-term-icon>)
     target_compile_definitions(cool-retro-term PRIVATE _WIN32_WINNT=0x0A00 NTDDI_VERSION=0x0A000006)
     target_link_libraries(cool-retro-term PRIVATE advapi32)
 endif()
