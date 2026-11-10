@@ -4,8 +4,8 @@
 
 No installation required — cool-retro-term is fully portable.
 
-1. Go to the [Releases](https://github.com/pushingpandas/cool-retro-term-windows/releases) page
-2. Download the latest `cool-retro-term-windows-*.zip`
+1. Open [this fork’s Releases page](https://github.com/andresdelcampo/cool-retro-term-windows/releases) and select the Enhanced release.
+2. Download the Windows ZIP under **Assets**.
 3. Extract the zip to any folder (e.g., `C:\Programs\cool-retro-term\`)
 4. Run `cool-retro-term.exe`
 
@@ -37,6 +37,16 @@ build_win.bat "C:\Qt\6.8.3\mingw_64"
 ```
 
 The script builds with CMake and Ninja, compiles the shader variants, and deploys the runtime and terminal plugin into `build\app`. Run `build\app\cool-retro-term.exe` and choose a Classic preset in **Profiles**. Keep the files in that directory together.
+
+### Prepare the Enhanced release ZIP
+
+After building and deploying the release commit, run this from the repository root in PowerShell:
+
+```powershell
+.\scripts\package-windows.ps1
+```
+
+The script writes `build\cool-retro-term-windows-enhanced-x64.zip` with the executable, deployed Qt runtime and plugins, terminal data, translations, and license files. Use `-OutputPath` to choose a different filename. Extract the ZIP into a clean folder and launch it before attaching it to the GitHub release.
 
 ---
 

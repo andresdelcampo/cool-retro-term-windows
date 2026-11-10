@@ -24,6 +24,7 @@ Nine presets follow the original 1.1.1 looks: Default Amber, Monochrome Green, G
 
 ## What this fork adds
 
+- **Shell selection in the enhanced release.** Choose PowerShell (automatic), Command Prompt or your default WSL distribution under **Settings → Advanced → Startup shell**. You can also run a custom command at startup or choose a shell for a single tab under **File → New Tab With Shell**. Changes to the startup shell apply to new sessions. WSL requires an installed distribution.
 - **Classic CRT rendering:** scanline and pixel masks are applied before bloom, with curvature, bezel and glow based on the 1.1.1 renderer. Futuristic retains its translucent window.
 - **Restored and refreshed profiles:** nine 1.1.1-inspired looks alongside adjusted existing presets, including bundled classic fonts and a C64 Pro Mono option. Older Classic profile names are recognized for compatibility.
 - **Windows window controls:** options for a borderless window and menu bar visibility, accessible through the application settings and menus.
@@ -33,9 +34,11 @@ The classic presets were compared with the original 1.1.1 application in WSL at 
 
 ## Run on Windows
 
-Windows 10 version 1809 or later, or Windows 11, is required for the ConPTY backend. To build this fork, install Git, CMake, Ninja and a Qt 6.8+ x64 kit with Qt Shader Tools and a matching compiler. Follow the [Windows build instructions](HOW_TO_INSTALL.md#option-2-build-from-source), then run `build/app/cool-retro-term.exe` and keep the deployed files together.
+1. Open [this fork’s Releases page](https://github.com/andresdelcampo/cool-retro-term-windows/releases) and select the Enhanced release.
+2. Download the Windows ZIP under **Assets** and extract it to a folder.
+3. Run `cool-retro-term.exe` from that folder. Keep the extracted files together.
 
-The [earlier Windows port's releases](https://github.com/pushingpandas/cool-retro-term-windows/releases) are available separately; those binaries may not include this fork's changes.
+The ZIP is portable and requires Windows 10 version 1809 or later, or Windows 11. See [Build from source](HOW_TO_INSTALL.md#option-2-build-from-source) for the compiler and Qt requirements.
 
 ## Earlier work and credits
 
