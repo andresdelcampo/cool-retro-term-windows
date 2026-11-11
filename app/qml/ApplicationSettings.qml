@@ -44,6 +44,8 @@ QtObject {
     property bool showMenubar: false
     property bool showWindowsMenubar: true
     property bool borderlessWindow: false
+    property int windowWidth: 1024
+    property int windowHeight: 768
 
     property bool showTerminalSize: true
     property real windowScaling: 1.0
@@ -177,6 +179,8 @@ QtObject {
             "showMenubar": showMenubar,
             "showWindowsMenubar": showWindowsMenubar,
             "borderlessWindow": borderlessWindow,
+            "windowWidth": windowWidth,
+            "windowHeight": windowHeight,
             "bloomQuality": bloomQuality,
             "burnInQuality": burnInQuality,
             "windowsShell": windowsShell,
@@ -270,6 +274,10 @@ QtObject {
         showMenubar = settings.showMenubar !== undefined ? settings.showMenubar : showMenubar
         showWindowsMenubar = settings.showWindowsMenubar !== undefined ? settings.showWindowsMenubar : showWindowsMenubar
         borderlessWindow = settings.borderlessWindow !== undefined ? settings.borderlessWindow : borderlessWindow
+        if (typeof settings.windowWidth === "number" && isFinite(settings.windowWidth) && settings.windowWidth >= 320)
+            windowWidth = settings.windowWidth
+        if (typeof settings.windowHeight === "number" && isFinite(settings.windowHeight) && settings.windowHeight >= 240)
+            windowHeight = settings.windowHeight
 
         bloomQuality = settings.bloomQuality !== undefined ? settings.bloomQuality : bloomQuality
         burnInQuality = settings.burnInQuality

@@ -29,8 +29,15 @@ ApplicationWindow {
     width: 1024
     height: 768
 
+    property int normalWidth: 1024
+    property int normalHeight: 768
+    onWidthChanged: if (visibility === Window.Windowed) normalWidth = width
+    onHeightChanged: if (visibility === Window.Windowed) normalHeight = height
+
     // Show the window once it is ready.
     Component.onCompleted: {
+        width = normalWidth = appSettings.windowWidth
+        height = normalHeight = appSettings.windowHeight
         visible = true
     }
 
@@ -193,6 +200,47 @@ ApplicationWindow {
         width: parent.width
         height: (parent.height + Math.abs(y))
     }
+    // Frameless windows have no native resize border. Keep the hit area narrow
+    // so terminal text selection and tab controls remain usable.
+    Item {
+        id: borderlessControls
+        anchors.fill: parent
+        z: 1000
+        visible: appSettings.isWindows && appSettings.borderlessWindow
+                 && terminalWindow.visibility === Window.Windowed
+
+        readonly property int edgeSize: 7
+
+        DragHandler {
+            target: null
+            acceptedButtons: Qt.LeftButton
+            acceptedModifiers: Qt.AltModifier
+            onActiveChanged: if (active) terminalWindow.startSystemMove()
+        }
+
+        Repeater {
+            model: [
+                { edges: Qt.TopEdge | Qt.LeftEdge, cursor: Qt.SizeFDiagCursor, x: 0, y: 0, w: 1, h: 1 },
+                { edges: Qt.TopEdge | Qt.RightEdge, cursor: Qt.SizeBDiagCursor, x: 2, y: 0, w: 1, h: 1 },
+                { edges: Qt.BottomEdge | Qt.LeftEdge, cursor: Qt.SizeBDiagCursor, x: 0, y: 2, w: 1, h: 1 },
+                { edges: Qt.BottomEdge | Qt.RightEdge, cursor: Qt.SizeFDiagCursor, x: 2, y: 2, w: 1, h: 1 },
+                { edges: Qt.TopEdge, cursor: Qt.SizeVerCursor, x: 1, y: 0, w: 2, h: 1 },
+                { edges: Qt.BottomEdge, cursor: Qt.SizeVerCursor, x: 1, y: 2, w: 2, h: 1 },
+                { edges: Qt.LeftEdge, cursor: Qt.SizeHorCursor, x: 0, y: 1, w: 1, h: 2 },
+                { edges: Qt.RightEdge, cursor: Qt.SizeHorCursor, x: 2, y: 1, w: 1, h: 2 }
+            ]
+            delegate: MouseArea {
+                required property var modelData
+                readonly property int border: borderlessControls.edgeSize
+                x: modelData.x === 0 ? 0 : modelData.x === 1 ? border : borderlessControls.width - border
+                y: modelData.y === 0 ? 0 : modelData.y === 1 ? border : borderlessControls.height - border
+                width: modelData.w === 1 ? border : borderlessControls.width - 2 * border
+                height: modelData.h === 1 ? border : borderlessControls.height - 2 * border
+                cursorShape: modelData.cursor
+                onPressed: terminalWindow.startSystemResize(modelData.edges)
+            }
+        }
+    }
     Loader {
         anchors.centerIn: parent
         active: appSettings.showTerminalSize
@@ -202,6 +250,8 @@ ApplicationWindow {
         }
     }
     onClosing: {
+        appSettings.windowWidth = normalWidth
+        appSettings.windowHeight = normalHeight
         appRoot.closeWindow(terminalWindow)
     }
 }
