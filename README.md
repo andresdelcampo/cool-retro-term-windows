@@ -1,4 +1,4 @@
-# cool-retro-term for Windows
+# cool-retro-term for Windows - Enhanced Edition
 
 | Default Amber | IBM DOS | Default Green |
 | :---: | :---: | :---: |
