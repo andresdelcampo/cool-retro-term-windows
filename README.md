@@ -27,7 +27,7 @@ Nine presets follow the original 1.1.1 looks: Default Amber, Monochrome Green, G
 - **Shell selection in the enhanced release.** Choose PowerShell (automatic), Command Prompt or your default WSL distribution under **Settings → Advanced → Startup shell**. You can also run a custom command at startup or choose a shell for a single tab under **File → New Tab With Shell**. Changes to the startup shell apply to new sessions. WSL requires an installed distribution.
 - **Classic CRT rendering:** scanline and pixel masks are applied before bloom, with curvature, bezel and glow based on the 1.1.1 renderer. Futuristic retains its translucent window.
 - **Restored and refreshed profiles:** nine 1.1.1-inspired looks alongside adjusted existing presets, including bundled classic fonts and a C64 Pro Mono option. Older Classic profile names are recognized for compatibility.
-- **Windows window controls:** options for a borderless window and menu bar visibility, accessible through the application settings and menus.
+- **Windows window controls:** options for a borderless window and menu bar visibility, accessible through the application settings and menus. Resize and move borderless windows (Alt and left click).
 - **Windows build:** a CMake/Ninja build and deployment script that compiles the shaders and prepares a runnable `build/app` directory.
 
 The classic presets were compared with the original 1.1.1 application in WSL at 1024×768 and 1× scaling. Measured row pitch matched for all nine; IBM 3278 and Futuristic rendered slightly heavier glyphs on Windows.
