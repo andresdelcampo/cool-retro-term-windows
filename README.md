@@ -10,7 +10,7 @@ cool-retro-term is a customizable terminal emulator that recreates the glow, cur
 
 ## Screenshots
 
-The animations and screenshots come from the [original cool-retro-term project](https://github.com/Swordfish90/cool-retro-term). The three stills below have their title bars removed.
+The animations and screenshots come from the [original cool-retro-term project](https://github.com/Swordfish90/cool-retro-term). The three stills below have their title bars removed. And yet, unlike other ports, these screenshots are 99.9% identical to the ones provided by this port. 
 
 ![Amber CRT showing a directory listing](docs/screenshots/original-amber.png)
 
